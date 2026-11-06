@@ -2,10 +2,10 @@ import os
 import requests
 import json
 
-# Cargar credenciales
-bot_token = os.environ.get('TELEGRAM_TOKEN')
-chat_id = os.environ.get('TELEGRAM_CHAT_ID')
-gemini_api_key = os.environ.get('GEMINI_API_KEY')
+# Cargar credenciales y LIMPIAR espacios en blanco invisibles automáticamente (.strip())
+bot_token = os.environ.get('TELEGRAM_TOKEN', '').strip()
+chat_id = os.environ.get('TELEGRAM_CHAT_ID', '').strip()
+gemini_api_key = os.environ.get('GEMINI_API_KEY', '').strip()
 
 # Instrucciones para la IA: Búsqueda de CLIENTES POTENCIALES
 prompt = """
@@ -26,7 +26,7 @@ No incluyas introducciones, dame directamente la lista estructurada.
 """
 
 # Pedir a Gemini que busque los leads
-url_gemini = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={gemini_api_key}"
+url_gemini = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={gemini_api_key}"
 headers = {'Content-Type': 'application/json'}
 data = {"contents": [{"parts": [{"text": prompt}]}]}
 
